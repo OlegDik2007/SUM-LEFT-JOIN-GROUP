@@ -1,0 +1,9 @@
+SELECT order_id,
+       sum(price) as order_price
+FROM   (SELECT order_id,
+               product_ids,
+               unnest(product_ids) as product_id
+        FROM   orders) t1
+    LEFT JOIN products using(product_id)
+GROUP BY order_id
+ORDER BY order_id limit 1000
